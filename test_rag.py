@@ -6,7 +6,7 @@
 
 from doc_loader import load_directory, split_documents
 from vector_store import build_vector_store
-from rag_chain import ask
+from rag_chain import RAGAssistant
 
 # ===== 第一步：构建向量数据库（只需运行一次）=====
 print("=" * 50)
@@ -28,9 +28,10 @@ for model in ["deepseek", "glm-4.5-air"]:
     print(f"模型: {model}")
     print(f"{'=' * 50}")
 
+    assistant = RAGAssistant(model_name=model)
     for q in questions:
         print(f"\n问题: {q}")
-        result = ask(q, model_name=model)
+        result = assistant.ask(q)
         print(f"回答: {result['answer']}")
         print(f"引用来源: {result['sources']}")
         print("-" * 40)
